@@ -1,5 +1,5 @@
-package com.mangaz.project.epub
+package com.mangaz.project.publisher
 
 trait Format {
-  def publish(book: Book): Boolean
+  def publish(book: Book): Boolean;
 }

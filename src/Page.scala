@@ -1,4 +1,4 @@
-package com.mangaz.project.epub
+package com.mangaz.project.publisher
 
 import java.io.File
 

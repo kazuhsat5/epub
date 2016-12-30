@@ -1,4 +1,4 @@
-package com.mangaz.project.epub
+package com.mangaz.project.publisher
 
 import java.util.ArrayList
 
@@ -16,9 +16,5 @@ class Book {
 
   def getPages(): ArrayList[Page] = {
     pages
-  }
-
-  def publish(format: Format): Boolean = {
-    format.publish(this)
   }
 }
