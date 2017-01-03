@@ -5,10 +5,9 @@ object FormatFactory {
 
   def create(format: FormatType.Value): Format = {
     format match {
-      case FormatType.EPUB =>
-        new Epub
-      case _ =>
-        null
+      case FormatType.EPUB => new Epub
+      case FormatType.ZIP => new Zip
+      case _ => null
     }
   }
 }

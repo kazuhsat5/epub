@@ -3,7 +3,6 @@ package com.mangaz.project.publisher
 import java.io.File
 
 class Page(pathname: String) {
-
   val file = new File(pathname)
 
   def getNameExtractExtension(): String = {
@@ -16,4 +15,11 @@ class Page(pathname: String) {
     filename.substring(0, point);
   }
 
+  def getAbsolutePath(): String = {
+    file.getAbsolutePath
+  }
+
+  def getName(): String = {
+    file.getName
+  }
 }
