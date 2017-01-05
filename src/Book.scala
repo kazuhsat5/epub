@@ -15,6 +15,7 @@ class Book {
   }
 
   def getPages(): ArrayList[Page] = {
+    println(pages)
     pages
   }
 }

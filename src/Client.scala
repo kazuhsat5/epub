@@ -4,8 +4,8 @@ import java.io.File
 object Client {
   def main(args: Array[String]): Unit = {
     val directory: String = args(0) // dev
-    //val output: String = "epub" // dev
-    val output: String = "zip" // dev
+    val output: String = "epub" // dev
+    //val output: String = "zip" // dev
 
     val book: Book = new Book
     for (file: File <- new File(directory).listFiles)

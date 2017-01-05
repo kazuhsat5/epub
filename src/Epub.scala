@@ -1,12 +1,8 @@
 package com.mangaz.project.publisher
 
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
-import java.util.zip.ZipOutputStream
-import java.util.zip.ZipEntry
-import java.io.FileOutputStream
-import java.io.FileInputStream
+import java.io.{File, PrintWriter}
+import java.nio.file.{Files, StandardCopyOption}
+import scala.xml.XML
 
 class Epub extends Format {
   def publish(book: Book): Boolean = {
@@ -14,15 +10,50 @@ class Epub extends Format {
 
     tmp.mkdir
 
-    book.getPages.forEach(each => {
-        Files.copy(new File(each.getAbsolutePath).toPath, new File(book.uniqueId + File.separator + each.getName).toPath, StandardCopyOption.REPLACE_EXISTING)
+    Array[String](
+      "META-INF",
+      "OEBPS",
+      "OEBPS" + File.separator + "images",
+      "OEBPS" + File.separator + "xhtml"
+    ).foreach(each => {
+      new File(tmp, each).mkdir
     })
 
+    book.getPages.forEach(each => {
+      val from = new File(each.getAbsolutePath).toPath
+      val to = new File(tmp, Array("OEBPS", "images", each.getName).mkString(File.separator)).toPath
+      Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING)
+    })
 
-    // EPUB出力
+    // mimetypeファイル作成
+    var file: File = new File(tmp, "mimetype")
+    file.createNewFile
 
-    // 作業ディレクトリの削除
-    tmp.listFiles.foreach(each => each.delete)
+    var printWriter: PrintWriter = new PrintWriter(file)
+    printWriter.write("application/epub+zip")
+    printWriter.close
+
+    // container.xml作成
+    var xml =
+      <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+        <rootfiles>
+          <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml" />
+        </rootfiles>
+      </container>
+
+    XmlUtil.saveXml(Array(tmp.getAbsolutePath, "META-INF", "container.xml").mkString(File.separator), xml)
+
+    // content.opf作成
+
+    // toc.xhtml作成
+
+    // コンテンツxhtml作成
+
+    // Zipファイルの作成
+
+    // 拡張子の変更
+
+    //FileSystemUtil.deleteRecursive(tmp)
 
     true
   }
