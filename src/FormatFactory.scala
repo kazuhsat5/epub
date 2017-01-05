@@ -4,14 +4,10 @@ import com.mangaz.project.publisher.format.{Zip, Epub}
 
 /**
  * フォーマットファクトリ
- *
  */
 object FormatFactory {
 
-  /**
-   * フォーマット形式
-   *
-   */
+  /* フォーマット形式 */
   object Type extends Enumeration {
 
     val EPUB, ZIP = Value
