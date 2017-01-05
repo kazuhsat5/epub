@@ -1,6 +1,6 @@
 package com.mangaz.project.publisher
 
-import com.mangaz.project.publisher.format.{Zip, Epub}
+import com.mangaz.project.publisher.format.{Zip, Epub3}
 
 /**
  * フォーマットファクトリ

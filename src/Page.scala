@@ -31,7 +31,7 @@ class Page(pathname: String) extends File(pathname: String) {
    */
   def isImage(): Boolean = {
     // 拡張子「.jpeg」あるいは「.jpg」のみを認める
-    List("jpeg", "jpg").contains(FileSystemUtil.getExtension(getName))
+    List("jpeg", "jpg").contains(Util.getExtension(getName))
   }
 
 }

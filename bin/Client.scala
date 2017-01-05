@@ -6,7 +6,8 @@ object Client {
   def main(args: Array[String]): Unit = {
     val directory: String = args(0) // 第一引数: ディレクトリ
     //val output: String = args(1)  // 第二引数: フォーマット
-    val output: String = "epub" // EPUB3
+    //val output: String = "epub" // EPUB3
+    val output: String = "zip" // ZIP
 
     val book: Book = new Book(
       "non-title",  // 作品タイトル
