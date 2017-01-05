@@ -50,7 +50,7 @@ class Epub3 extends Format {
     // 空白画像のコピー
     if (book.flyleaf == true) {  // 空白画像の挿入が必要な場合のみ
       Files.copy(
-        new File("../resource/white.jpg").toPath,
+        new File("../../resource/white.jpg").toPath,
         new File(tmp, "OEBPS/image/white.jpg").toPath,
         StandardCopyOption.REPLACE_EXISTING)
     }
