@@ -1,5 +1,6 @@
 package com.mangaz.project.publisher.format
 
+import com.mangaz.project.publisher.{Format, Book, Util}
 import java.io.{File, PrintWriter}
 import java.nio.file.{Files, StandardCopyOption}
 import scala.xml.{XML, Elem}
@@ -13,15 +14,15 @@ import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
 /**
- * EPUB
+ * EPUB3
  */
-class Epub extends Format {
+class Epub3 extends Format {
 
   /**
    * 出力
    *
    * @param book Bookオブジェクト
-   * @return Boolean
+   * @return 変換結果(trueで成功L)
    */
   def publish(book: Book): Boolean = {
     // 作業ディレクトリ作成
@@ -78,7 +79,7 @@ class Epub extends Format {
   </rootfiles>
 </container>
 
-    XmlUtil.saveXml(Array(tmp.getAbsolutePath, "META-INF", "container.xml").mkString(File.separator), xml)
+    Util.saveXml(Array(tmp.getAbsolutePath, "META-INF", "container.xml").mkString(File.separator), xml)
 
     /* ===================================================== */
     /*  content.opf                                          */
@@ -104,16 +105,16 @@ class Epub extends Format {
 
         // 表紙画像
         if (count == 1) {
-          <item media-type="image/jpeg" properties="cover-image" id={"i-" + FileSystemUtil.getNameWithoutExtension(each)} href={"image/" + each.getName} />
+          <item media-type="image/jpeg" properties="cover-image" id={"i-" + Util.getNameWithoutExtension(each)} href={"image/" + each.getName} />
         // 表紙画像以外
         } else {
-          <item media-type="image/jpeg" id={"i-" + FileSystemUtil.getNameWithoutExtension(each)} href={"image/" + each.getName} />
+          <item media-type="image/jpeg" id={"i-" + Util.getNameWithoutExtension(each)} href={"image/" + each.getName} />
         }
       }
     }
     {
       new File(tmp + File.separator + "OEBPS" + File.separator + "image").listFiles.map { each =>
-        val filename = FileSystemUtil.getNameWithoutExtension(each)
+        val filename = Util.getNameWithoutExtension(each)
 
         <item media-type="application/xhtml+xml" id={"p-" + filename} href={"xhtml/" + filename + ".xhtml"} properties="svg"/>
       }
@@ -126,7 +127,7 @@ class Epub extends Format {
       new File(tmp + File.separator + "OEBPS" + File.separator + "image").listFiles.map { each =>
         count += 1
 
-        val filename = FileSystemUtil.getNameWithoutExtension(each)
+        val filename = Util.getNameWithoutExtension(each)
 
         // 表紙画像かつ白紙画像挿入なし
         if (count == 1 && book.flyleaf == false) {
@@ -162,7 +163,7 @@ class Epub extends Format {
   </spine>
 </package>
 
-    XmlUtil.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "content.opf").mkString(File.separator), xml)
+    Util.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "content.opf").mkString(File.separator), xml)
 
     /* ===================================================== */
     /*  toc.xhtml                                            */
@@ -182,7 +183,7 @@ class Epub extends Format {
         var count: Int = 0
 
         new File(tmp + File.separator + "OEBPS" + File.separator + "image").listFiles.map { each =>
-          val filename = FileSystemUtil.getNameWithoutExtension(each)
+          val filename = Util.getNameWithoutExtension(each)
 
           count += 1
 
@@ -203,14 +204,14 @@ class Epub extends Format {
   </body>
 </html>
 
-    XmlUtil.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "toc.xhtml").mkString(File.separator), xml)
+    Util.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "toc.xhtml").mkString(File.separator), xml)
 
     /* ===================================================== */
     /*  画像xhtml                                            */
     /* ===================================================== */
 
     new File(tmp + File.separator + "OEBPS" + File.separator + "image").listFiles.foreach(each => {
-      val filename: String= FileSystemUtil.getNameWithoutExtension(each)
+      val filename: String= Util.getNameWithoutExtension(each)
       xml =
 //<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
@@ -227,7 +228,7 @@ class Epub extends Format {
   </body>
 </html>
 
-      XmlUtil.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "xhtml", filename + ".xhtml").mkString(File.separator), xml)
+      Util.saveXml(Array(tmp.getAbsolutePath, "OEBPS", "xhtml", filename + ".xhtml").mkString(File.separator), xml)
     });
 
     // Zipファイルの作成
@@ -235,7 +236,7 @@ class Epub extends Format {
 
 
     // ZIPファイル->EPUBファイル(拡張子の変更)
-    FileSystemUtil.rename(book.uniqueId + ".zip", book.uniqueId + ".epub")
+    Util.rename(book.uniqueId + ".zip", book.uniqueId + ".epub")
 
     true
   }

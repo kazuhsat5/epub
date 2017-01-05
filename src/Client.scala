@@ -20,7 +20,7 @@ object Client {
 
     val format: Format =  output match {
       case "zip" => FormatFactory.create(FormatFactory.Type.ZIP)
-      case "epub" => FormatFactory.create(FormatFactory.Type.EPUB)
+      case "epub3" => FormatFactory.create(FormatFactory.Type.EPUB3)
     }
 
     format.publish(book)

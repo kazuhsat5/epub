@@ -10,7 +10,7 @@ object FormatFactory {
   /* フォーマット形式 */
   object Type extends Enumeration {
 
-    val EPUB, ZIP = Value
+    val EPUB3, ZIP = Value
 
   }
 
@@ -22,7 +22,7 @@ object FormatFactory {
    */
   def create(format: Type.Value): Format = {
     format match {
-      case Type.EPUB => new Epub
+      case Type.EPUB3 => new Epub3
       case Type.ZIP => new Zip
       case _ => null
     }
