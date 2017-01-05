@@ -1,9 +1,20 @@
-package com.mangaz.project.publisher
+package com.mangaz.project.publisher.format
 
+import com.mangaz.project.publisher.{Format, Book}
 import java.util.zip.{ZipOutputStream, ZipEntry}
 import java.io.{FileOutputStream, FileInputStream}
 
+/**
+ * ZIP
+ */
 class Zip extends Format {
+
+  /**
+   * 出力
+   *
+   * @param book Bookオブジェクト
+   * @return 変換結果(trueで成功)
+   */
   def publish(book: Book): Boolean = {
     val zipOutputStream: ZipOutputStream = new ZipOutputStream(new FileOutputStream(book.uniqueId + ".zip"))
 
@@ -25,4 +36,5 @@ class Zip extends Format {
 
     true
   }
+
 }

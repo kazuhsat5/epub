@@ -1,4 +1,4 @@
-package com.mangaz.project.publisher
+package com.mangaz.project.publisher.format
 
 import java.io.{File, PrintWriter}
 import java.nio.file.{Files, StandardCopyOption}
@@ -12,7 +12,17 @@ import java.io.BufferedInputStream
 import java.util.zip.ZipOutputStream
 import java.util.zip.ZipEntry
 
+/**
+ * EPUB
+ */
 class Epub extends Format {
+
+  /**
+   * 出力
+   *
+   * @param book Bookオブジェクト
+   * @return Boolean
+   */
   def publish(book: Book): Boolean = {
     // 作業ディレクトリ作成
     val tmp: File = new File(book.uniqueId)
@@ -230,6 +240,13 @@ class Epub extends Format {
     true
   }
 
+
+
+
+
+// @see https://www.ibm.com/developerworks/community/blogs/pgmrk/entry/epub_e3_81_ae_e9_9b_bb_e5_ad_90_e6_96_87_e6_9b_b8_e3_82_92_e4_bd_9c_e3_82_8b23?lang=en
+
+
   def zipDir(srcdir: String, outputfilename: String){
     var zos: ZipOutputStream = null
 
@@ -286,4 +303,5 @@ class Epub extends Format {
       }
     }
   }
+
 }

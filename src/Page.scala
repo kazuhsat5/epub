@@ -8,6 +8,7 @@ import java.io.File
  * @param pathname ファイルパス
  */
 class Page(pathname: String) extends File(pathname: String) {
+
   /**
    * 拡張子を除いたファイル名を取得する
    *
@@ -29,6 +30,8 @@ class Page(pathname: String) extends File(pathname: String) {
    * @return 判定結果
    */
   def isImage(): Boolean = {
+    // 拡張子「.jpeg」あるいは「.jpg」のみを認める
     List("jpeg", "jpg").contains(FileSystemUtil.getExtension(getName))
   }
+
 }
